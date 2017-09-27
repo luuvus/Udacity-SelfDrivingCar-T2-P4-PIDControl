@@ -2,6 +2,21 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+This project implements a PID control in C++ to drive a vehicle autonomously at highest speed possible in a computer simulated environment. In addition to driving at highest speed, the program needs to pick an optimal parameters to make the vehicle drive in as straight as posible, which mean minimal sway/swirl left and right.
+
+The program/application receive vehicle's Cross Track Error(CTE), which is the distance between the lane center and the position of thevehicle, and use this error to calculate the values for Proportional, Integral, Derivative (PID). In the end, the program will calculate combine PID error value, which will be sent back to the vehicle as throttle/speed signal.
+
+'P' is the proportional term affect the steering base on the Cross Track Error (CTE), which mean if the vehicle is facing toward the right of the lane, the 'P' value will adjust left, and vice versa.
+
+'I' is integral term that track and calculate a sum of all observed CTE errors, which help the vehicle adjust to drifting issues, such as the vehicle is consistently drifting to the right of the lane, then it will adjust to back left. 
+
+The derivative term 'D' evaluate the change in error between the previous error and current error to adjust overshooting of vehicle steering direction and bring the vehicle closer to the reference line.
+
+A manual process was used in selecting value for PID parameters. Initially, I set various values for 'P', while setting zero for 'I' and 'D', and observe the result. This single parameter value setting method is applied to 'I' and 'D' until the vehicle begin to navigate within the lane. All paramereter values are started out at high value and slowly reduced until the vehicle achieve the desire high speed and minimal sway/swirl.
+
+The final values of P, I, and D are set at 0.2, 0.0004, 4.0, which make the vehicle  achieve an average speed of 52 mph.
+
+---
 
 ## Dependencies
 
@@ -49,50 +64,3 @@ using the following settings:
 ## Code Style
 
 Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
-
-## Project Instructions and Rubric
-
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
-
-More information is only accessible by people who are already enrolled in Term 2
-of CarND. If you are enrolled, see [the project page](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/f1820894-8322-4bb3-81aa-b26b3c6dcbaf/lessons/e8235395-22dd-4b87-88e0-d108c5e5bbf4/concepts/6a4d8d42-6a04-4aa6-b284-1697c0fd6562)
-for instructions and the project rubric.
-
-## Hints!
-
-* You don't have to follow this directory structure, but if you do, your work
-  will span all of the .cpp files here. Keep an eye out for TODOs.
-
-## Call for IDE Profiles Pull Requests
-
-Help your fellow students!
-
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to we ensure
-that students don't feel pressured to use one IDE or another.
-
-However! I'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
-
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
-
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
-
-Frankly, I've never been involved in a project with multiple IDE profiles
-before. I believe the best way to handle this would be to keep them out of the
-repo root to avoid clutter. My expectation is that most profiles will include
-instructions to copy files to a new location to get picked up by the IDE, but
-that's just a guess.
-
-One last note here: regardless of the IDE used, every submitted project must
-still be compilable with cmake and make./
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
